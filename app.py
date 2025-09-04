@@ -74,3 +74,7 @@ def created():
                <div><i>А может, ничего и не создавалось?..</i></div>
            </body>
         </html>''', 201
+
+@app.errorhandler(404)
+def not_found(err):
+    return "Такой страницы не существует", 404
