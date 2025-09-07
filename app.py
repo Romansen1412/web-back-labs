@@ -185,9 +185,17 @@ def method_not_allowed():
 def teapot():
     return "418 I'm a teapot — сервер отказывается заваривать кофе, потому что он чайник", 418
 
+not_found_log = []
+
 @app.errorhandler(404)
 def not_found(err):
+    client_ip = request.remote_addr
+    time = str(datetime.datetime.today())
+    url = request.url
+    not_found_log.append(time + " пользователь " + client_ip + " зашел на адрес: " + url)
     path = url_for("static", filename="error.jpg")
+    log_html = "<br>".join(not_found_log)
+
     return '''<!doctype html>
         <html>
             <style>
@@ -205,8 +213,15 @@ def not_found(err):
             <body>
                 <h1>Если этого нет, то может оно тебе и не надо?</h1>
                 <img src="''' + path + '''">
+                <p>Ваш IP: ''' + client_ip + '''</p>
+                <p>Дата и время запроса: ''' + time + '''</p>
+                <p>Попробуйте вернуться на <a href="/">главную страницу</a></p>
+                <hr>
+                <h3>Лог всех 404-запросов:</h3>
+                <div style='text-align: left;'>''' + log_html + '''</div>
             </body>
         </html>''', 404
+
 
 @app.route("/lab1/error")
 def error():
