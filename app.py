@@ -3,6 +3,29 @@ import datetime
 app = Flask(__name__)
 
 @app.route("/")
+@app.route("/index")
+def start():
+    return """<!doctype html>
+    <html>
+        <head>
+            <title>НГТУ, ФБ, Лабораторные работы</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1>НГТУ, ФБ, WEB-программирование, часть 2. Список лабораторных</h1>
+            <ul>
+                <li><a href="/lab1">Первая лабораторная</a></li>
+            </ul>
+            <hr>
+            <footer>
+                <p>Фисенко Роман Алексеевич</p>
+                <p>Группа: ФБИ-31</p>
+                <p>Курс: 3</p>
+                <p>2025 год</p>
+            </footer>
+        </body>
+    </html>"""
+
 @app.route("/lab1/web")
 def web():
     return """<!doctype html>
