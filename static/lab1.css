@@ -1,0 +1,11 @@
+img {
+    height: 200px;
+    width: auto;
+    border-radius: 15px;
+    box-shadow: 10px 10px 15px black;
+}
+body {
+    background-color: lightgreen;
+    color: darkred;
+    text-align: center;
+}
