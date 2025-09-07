@@ -40,11 +40,27 @@ def lab1():
                 программирования Python, использующий набор инструментов
                 Werkzeug, а также шаблонизатор Jinja2. Относится к категории так
                 называемых микрофреймворков — минималистичных каркасов
-                веб-приложений, сознательно предоставляющих лишь самые ба
-                зовые возможности.
+                веб-приложений, сознательно предоставляющих лишь самые
+                базовые возможности.
             </div>
             <hr>
-            <li><a href="/">Главное меню</a></li>
+            <a href="/">Главное меню</a>
+            <ul>
+                <li><a href="/lab1/web">/lab1/web</a></li>
+                <li><a href="/lab1/author">/lab1/author</a></li>
+                <li><a href="/lab1/image">/lab1/image</a></li>
+                <li><a href="/lab1/counter">/lab1/counter</a></li>
+                <li><a href="/lab1/clear">/lab1/clear</a></li>
+                <li><a href="/lab1/info">/lab1/info</a></li>
+                <li><a href="/lab1/created">/lab1/created</a></li>
+                <li><a href="/lab1/400">/lab1/400</a></li>
+                <li><a href="/lab1/401">/lab1/401</a></li>
+                <li><a href="/lab1/402">/lab1/402</a></li>
+                <li><a href="/lab1/403">/lab1/403</a></li>
+                <li><a href="/lab1/405">/lab1/405</a></li>
+                <li><a href="/lab1/418">/lab1/418</a></li>
+                <li><a href="/lab1/error">/lab1/error</a></li>
+            </ul>
         </body>
     </html>"""
 
