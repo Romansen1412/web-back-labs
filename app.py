@@ -87,7 +87,12 @@ def image():
                 <h1>Мудрый Дуб</h1>
                 <img src="''' + path + '''">
             </body>
-        </html>'''
+        </html>''', {
+            'Content-Type': 'text/html; charset=utf-8',
+            'Content-Language': 'ru',
+            'X-Author': 'Fisenko Roman A.',
+            'X-Project': 'LabFlask'
+        }
 
 count = 0
 
