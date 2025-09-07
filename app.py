@@ -140,6 +140,30 @@ def created():
            </body>
         </html>''', 201
 
+@app.route("/lab1/400")
+def bad_request():
+    return "400 Bad Request — сервер не может обработать запрос из-за ошибки клиента", 400
+
+@app.route("/lab1/401")
+def unauthorized():
+    return "401 Unauthorized — требуется аутентификация для доступа к ресурсу", 401
+
+@app.route("/lab1/402")
+def payment_required():
+    return "402 Payment Required — зарезервировано для будущего использования", 402
+
+@app.route("/lab1/403")
+def forbidden():
+    return "403 Forbidden — у вас нет прав доступа к этому ресурсу", 403
+
+@app.route("/lab1/405")
+def method_not_allowed():
+    return "405 Method Not Allowed — метод запроса не поддерживается для данного ресурса", 405
+
+@app.route("/lab1/418")
+def teapot():
+    return "418 I'm a teapot — сервер отказывается заваривать кофе, потому что он чайник", 418
+
 @app.errorhandler(404)
 def not_found(err):
     return "Такой страницы не существует", 404
