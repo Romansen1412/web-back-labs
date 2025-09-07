@@ -186,3 +186,23 @@ def not_found(err):
                 <img src="''' + path + '''">
             </body>
         </html>''', 404
+
+@app.route("/lab1/error")
+def error():
+    return 1 / 0  
+
+@app.errorhandler(500)
+def server_error(err):
+    return """<!doctype html>
+    <html>
+        <head>
+            <title>Ошибка 500</title>
+            <meta charset="utf-8">
+        </head>
+        <body>
+            <h1>500 — Внутренняя ошибка сервера</h1>
+            <p>На сервере произошла непредвиденная ошибка. 
+               Мы уже работаем над её исправлением!</p>
+            <a href="/">Вернуться на главную</a>
+        </body>
+    </html>""", 500
