@@ -242,3 +242,11 @@ def server_error(err):
             <a href="/">Вернуться на главную</a>
         </body>
     </html>""", 500
+
+@app.route('/lab2/a')
+def a():
+    return 'А слэша нету'
+
+@app.route('/lab2/a/')
+def a2():
+    return 'Слэш есть'
