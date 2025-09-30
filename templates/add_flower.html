@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+<h1>Добавлен новый цветок</h1>
+<p>Название нового цветка: {{ name }}</p>
+<p>Всего цветов: {{ total }}</p>
+<p>Полный список: {{ flowers }}</p>
+{% endblock %}
