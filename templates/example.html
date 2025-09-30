@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фисенко Роман. Лабораторная работа {{ lab }}</title>
+    <title>{% if name %}
+        {{ name }}.
+    {% else %}
+        Анонимус.
+    {% endif %}
+    {% if lab %}Лабораторная работа {{ lab }}{% endif %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
 </head>
 <body>
     <header>
-        WEB-программирование, часть {{ course }}. Лабораторная работа {{ lab }}
+        WEB-программирование, часть
+        {% if course %}
+            {{ course }}. 
+        {% else %}
+            З̱̹̖̠̫̒̉̓ͣͅа͒ͬ̿̇ш̅͐̔̂и̠͙͍̝̜̣̳̋̃͗̾͑̽̈ф̮͚р̗͒̾ͪ͛̾͆о͕̺̺̬̭̍͛͗̏̚в͍̺ͤ̀͛̈́̌̈́а̰̜͋ͩͤ̆ͤ̄̚н̻̜̭о̪̤̪̼ͫ̏͊ͥ̊͐. 
+        {% endif %}
+        {% if lab %}Лабораторная работа {{ lab }}{% endif %}
     </header>
 
     <main>
@@ -20,7 +31,19 @@
     </main>
 
     <footer>
-        &copy; {{ name }}, {{ group }}, 2025
+        &copy;
+        {% if name %}
+            {{ name }},
+        {% else %}
+            Анонимус,
+        {% endif %}
+
+        {% if group %}
+            {{ group }},
+        {% else %}
+            Без группы,
+        {% endif %}
+        2025
     </footer>
 </body>
 </html>
