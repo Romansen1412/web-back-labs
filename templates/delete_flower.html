@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+<h1>Удалён цветок: {{ flower.name }}</h1>
+<p>Всего цветов осталось: {{ total }}</p>
+<p><a href="{{ url_for('all_flowers') }}">Вернуться к списку всех цветов</a></p>
+{% endblock %}

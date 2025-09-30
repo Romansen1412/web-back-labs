@@ -4,6 +4,7 @@
 
 {% block main %}
 <h1>Цветок №{{ flower_id + 1 }}</h1>
-<p>Название: <b>{{ flower_name }}</b></p>
+<p>Название: <b>{{ flower_name.name }}</b></p>
+<p>Цена: <b>{{ flower_name.price }}</b></p>
 <p><a href="{{ url_for('all_flowers') }}">Посмотреть все цветы</a></p>
 {% endblock %}

@@ -252,7 +252,12 @@ def a():
 def a2():
     return 'Слэш есть'
 
-flower_list = ['Роза', 'Тюльпан', 'Незабудка', 'Ромашка']
+flower_list = [
+    {"name": "Роза", "price": 100},
+    {"name": "Тюльпан", "price": 80},
+    {"name": "Незабудка", "price": 50},
+    {"name": "Ромашка", "price": 60}
+]
 
 @app.route('/lab2/flowers/<int:flower_id>')
 def flowers(flower_id):
@@ -261,11 +266,17 @@ def flowers(flower_id):
     flower_name = flower_list[flower_id]
     return render_template('flower.html', flower_id=flower_id, flower_name=flower_name)
 
+@app.route('/lab2/delete_flower/<int:flower_id>')
+def delete_flower(flower_id):
+    if flower_id >= len(flower_list):
+        abort(404)
+    deleted_flower = flower_list.pop(flower_id)
+    return render_template('delete_flower.html', flower=deleted_flower, total=len(flower_list), flowers=flower_list)
 
-@app.route('/lab2/add_flower/<name>')
-def add_flower(name):
-    flower_list.append(name)
-    return render_template('add_flower.html', name=name, total=len(flower_list), flowers=flower_list)
+@app.route('/lab2/add_flower/<name>/<int:price>')
+def add_flower(name, price):
+    flower_list.append({"name": name, "price": price})
+    return render_template('add_flower.html', name=name, price=price, total=len(flower_list), flowers=flower_list)
 
 @app.route('/lab2/add_flower/')
 def add_flower_empty():

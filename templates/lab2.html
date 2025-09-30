@@ -11,7 +11,7 @@
         <li><a href="{{ url_for('a') }}">Страница без слэша</a></li>
         <li><a href="{{ url_for('a2') }}">Страница со слэшем</a></li>
         <li><a href="{{ url_for('flowers', flower_id=0) }}">Пример цветок №1</a></li>
-        <li><a href="{{ url_for('add_flower', name='Тест') }}">Добавить тестовый цветок</a></li>
+        <li><a href="{{ url_for('add_flower', name='Тест', price=0) }}">Добавить тестовый цветок</a></li>
         <li><a href="{{ url_for('add_flower_empty') }}">Добавить цветок (без имени)</a></li>
         <li><a href="{{ url_for('all_flowers') }}">Все цветы</a></li>
         <li><a href="{{ url_for('clear_flowers') }}">Очистить цветы</a></li>
