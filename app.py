@@ -376,3 +376,29 @@ books = [
 @app.route("/lab2/books")
 def lab2_books():
     return render_template("books.html", books=books)
+
+animals = [
+    {"name": "Котик", "desc": "Милый пушистый кот", "img": "Cat.jpg"},
+    {"name": "Собака", "desc": "Весёлый щенок", "img": "Dog.jpg"},
+    {"name": "Черепаха", "desc": "Медлительное существо с панцирем", "img": "Turtle.jpg"},
+    {"name": "Хомяк", "desc": "Маленький грызун", "img": "Hamster.jpg"},
+    {"name": "Крокодил", "desc": "Опасный хищник", "img": "Crocodile.jpg"},
+    {"name": "Паук", "desc": "Охотник на насекомых и грызунов", "img": "Spider.jpg"},
+    {"name": "Жираф", "desc": "Высокое животное с длинной шеей", "img": "Giraffe.jpg"},
+    {"name": "Голубь", "desc": "Миролюбивая птица", "img": "Pigeon.jpg"},
+    {"name": "Жук-носорог", "desc": "Маленький жук с рогом", "img": "Rhinoceros beetle.jpg"},
+    {"name": "Плащеносная акула", "desc": "Редкая глубоководная акула", "img": "Frilled shark.jpg"},
+    {"name": "Гусь", "desc": "Птица с длинной шеей", "img": "Goose.jpg"},
+    {"name": "Носорог", "desc": "Большое животное с рогом", "img": "Rhino.jpg"},
+    {"name": "Крылатка-зебра", "desc": "Ядовитая и красочная морская рыба", "img": "Red lionfish.jpg"},
+    {"name": "Лев", "desc": "Царь зверей", "img": "Lion.jpg"},
+    {"name": "Обезьяна", "desc": "Как жизнь, брат?", "img": "Monkey.jpg"},
+    {"name": "Медведь", "desc": "Большое лесное животное", "img": "Bear.jpg"},
+    {"name": "Пингвин", "desc": "Не умеет летать, но отлично плавает", "img": "Penguin.jpg"},
+    {"name": "Наутилус", "desc": "Морской моллюск с раковиной", "img": "Nautilus.jpg"},
+    {"name": "Лось", "desc": "Крупный лесной зверь", "img": "Moose.jpg"}
+]
+
+@app.route("/lab2/animals")
+def lab2_animals():
+    return render_template("objects.html", objects=animals)

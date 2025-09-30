@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 2{% endblock %}
+
+{% block main %}
+    <h1>Список объектов</h1>
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for obj in objects %}
+        <div style="width: 300px; border: 1px solid black; border-radius: 8px; padding: 10px; text-align: center;">
+            <img src="{{ url_for('static', filename='lab2img/' ~ obj.img) }}" style="width: 100%; height: auto; border-radius: 5px;">
+            <h3>{{ obj.name }}</h3>
+            <p>{{ obj.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
