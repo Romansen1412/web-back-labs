@@ -174,3 +174,8 @@ def method_not_allowed():
 @lab1.route("/lab1/418")
 def teapot():
     return "418 I'm a teapot — сервер отказывается заваривать кофе, потому что он чайник", 418
+
+
+@lab1.route("/lab1/error")
+def error():
+    return 1 / 0  
