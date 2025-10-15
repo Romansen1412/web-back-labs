@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+    <h1>Спасибо за заказ!</h1>
+
+    <p>Ваш заказ оплачен на сумму {{ price }} рублей.</p>
+
+    <h3>Состав заказа:</h3>
+    <ul>
+        <li>Напиток: {{ drink_name }}</li>
+        {% if additions %}
+            <li>Добавки: {{ additions | join(', ') }}</li>
+        {% else %}
+            <li>Добавки: нет</li>
+        {% endif %}
+    </ul>
+
+    <a href="/lab3/order">Вернуться к заказу</a>
+{% endblock %}
