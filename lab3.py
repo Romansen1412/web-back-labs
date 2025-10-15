@@ -78,3 +78,35 @@ def success():
         additions.append('Сахар = 10руб')
 
     return render_template('lab3/success.html', price=price, drink_name=drink_name, additions=additions)
+
+@lab3.route('/lab3/settings')
+def settings():
+    color = request.args.get('color')
+    background_color = request.args.get('background_color')
+    font_size = request.args.get('font_size')
+    font_style = request.args.get('font_style')
+
+    if color or background_color or font_size or font_style:
+        resp = make_response(redirect('/lab3/settings'))
+        if color:
+            resp.set_cookie('color', color)
+        if background_color:
+            resp.set_cookie('background_color', background_color)
+        if font_size:
+            resp.set_cookie('font_size', font_size)
+        if font_style:
+            resp.set_cookie('font_style', font_style)
+        return resp
+
+    color = request.cookies.get('color')
+    background_color = request.cookies.get('background_color')
+    font_size = request.cookies.get('font_size')
+    font_style = request.cookies.get('font_style')
+    resp = make_response(render_template(
+        'lab3/settings.html',
+        color=color,
+        background_color=background_color,
+        font_size=font_size,
+        font_style=font_style
+    ))
+    return resp
