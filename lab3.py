@@ -111,3 +111,52 @@ def settings():
         font_style=font_style
     ))
     return resp
+
+@lab3.route('/lab3/order_train')
+def order_train():
+    fio = request.args.get('fio')
+    berth = request.args.get('berth')
+    departure = request.args.get('departure')
+    destination = request.args.get('destination')
+    date = request.args.get('date')
+    linen = request.args.get('linen')
+    baggage = request.args.get('baggage')
+    insurance = request.args.get('insurance')
+    
+    age_str = request.args.get('age')
+    try:
+        age = int(age_str)
+        if age < 1 or age > 120:
+            return "Ошибка: возраст должен быть от 1 до 120 лет."
+    except:
+        age = None
+
+    price = 0
+    services = []
+
+    if age is not None:
+        price = 1000 if age >= 18 else 700
+        services.append(f"Билет = {price}руб")
+        
+        if berth in ['нижняя', 'нижняя боковая']:
+            price += 100
+            services.append("Место: нижнее = 100руб")
+        if linen == 'on':
+            price += 75
+            services.append("Постельное бельё = 75руб")
+        if baggage == 'on':
+            price += 250
+            services.append("Багаж = 250руб")
+        if insurance == 'on':
+            price += 150
+            services.append("Страховка = 150руб")
+
+    return render_template('lab3/order_train.html',
+                           fio=fio,
+                           berth=berth,
+                           departure=departure,
+                           destination=destination,
+                           date=date,
+                           age=age,
+                           price=price,
+                           services=services)

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 3{% endblock %}
+
+{% block main %}
+<h1>Заказ железнодорожного билета</h1>
+
+{% if price %}
+<div>
+    <h2>Ваш билет</h2>
+    <p><strong>ФИО:</strong> {{ fio }}</p>
+    <p><strong>Полка:</strong> {{ berth }}</p>
+    <p><strong>Возраст:</strong> {{ age }} {% if age < 18 %}(Детский билет){% endif %}</p>
+    <p><strong>Пункт выезда:</strong> {{ departure }}</p>
+    <p><strong>Пункт назначения:</strong> {{ destination }}</p>
+    <p><strong>Дата поездки:</strong> {{ date }}</p>
+
+    <h3>Выбранные услуги:</h3>
+    <ul>
+        {% for service in services %}
+            <li>{{ service }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Итоговая стоимость: {{ price }} руб.</h3>
+</div>
+<br>
+{% endif %}
+
+<form action="/lab3/order_train" method="get">
+    <div>ФИО пассажира:</div>
+    <input type="text" name="fio" required value="{{ fio|default('') }}">
+
+    <div>Полка:</div>
+    <select name="berth" required>
+        <option value="нижняя" {% if berth=='нижняя' %}selected{% endif %}>Нижняя</option>
+        <option value="верхняя" {% if berth=='верхняя' %}selected{% endif %}>Верхняя</option>
+        <option value="верхняя боковая" {% if berth=='верхняя боковая' %}selected{% endif %}>Верхняя боковая</option>
+        <option value="нижняя боковая" {% if berth=='нижняя боковая' %}selected{% endif %}>Нижняя боковая</option>
+    </select>
+
+    <div><label><input type="checkbox" name="linen" {% if linen=='on' %}checked{% endif %}>С бельём</label></div>
+    <div><label><input type="checkbox" name="baggage" {% if baggage=='on' %}checked{% endif %}>С багажом</label></div>
+    <div><label><input type="checkbox" name="insurance" {% if insurance=='on' %}checked{% endif %}>Нужна страховка</label></div>
+
+    <div>Возраст:</div>
+    <input type="number" name="age" min="1" max="120" required value="{{ age|default('') }}">
+
+    <div>Пункт выезда:</div>
+    <input type="text" name="departure" required value="{{ departure|default('') }}">
+
+    <div>Пункт назначения:</div>
+    <input type="text" name="destination" required value="{{ destination|default('') }}">
+
+    <div>Дата поездки:</div>
+    <input type="date" name="date" required value="{{ date|default('') }}">
+
+    <input type="hidden" name="price" value="{{ price }}">
+    <input type="hidden" name="services" value="{{ services|join(', ') }}">
+
+    <div>
+        <button type="submit">Сформировать билет</button>
+    </div>
+</form>
+{% endblock %}
