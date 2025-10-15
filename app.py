@@ -43,7 +43,7 @@ def not_found(err):
     time = str(datetime.datetime.today())
     url = request.url
     not_found_log.append(time + " пользователь " + client_ip + " зашел на адрес: " + url)
-    path = url_for("static", filename="error.jpg")
+    path = url_for("static", filename="lab1/error.jpg")
     log_html = "<br>".join(not_found_log)
 
     return '''<!doctype html>
