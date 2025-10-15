@@ -33,3 +33,12 @@ body {
     right: 0;
   }
   
+.error {
+    color: white;
+    font-size: 20px;
+    background-color: red;
+    border: 1px solid coral;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-top: 4px;
+}
