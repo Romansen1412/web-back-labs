@@ -114,11 +114,11 @@ def settings():
 
 @lab3.route('/lab3/order_train')
 def order_train():
-    fio = request.args.get('fio')
-    berth = request.args.get('berth')
-    departure = request.args.get('departure')
-    destination = request.args.get('destination')
-    date = request.args.get('date')
+    fio = request.args.get('fio', '')
+    berth = request.args.get('berth', '')
+    departure = request.args.get('departure', '')
+    destination = request.args.get('destination', '')
+    date = request.args.get('date', '')
     linen = request.args.get('linen')
     baggage = request.args.get('baggage')
     insurance = request.args.get('insurance')
@@ -160,3 +160,11 @@ def order_train():
                            age=age,
                            price=price,
                            services=services)
+
+@lab3.route('/lab3/clear_cookies')
+def clear_cookies():
+    resp = make_response(redirect('/lab3'))
+    cookies_to_clear = ['color', 'background_color', 'font_size', 'font_style']
+    for cookie in cookies_to_clear:
+        resp.set_cookie(cookie, '')
+    return resp

@@ -8,12 +8,12 @@
 {% if price %}
 <div>
     <h2>Ваш билет</h2>
-    <p><strong>ФИО:</strong> {{ fio }}</p>
-    <p><strong>Полка:</strong> {{ berth }}</p>
-    <p><strong>Возраст:</strong> {{ age }} {% if age < 18 %}(Детский билет){% endif %}</p>
-    <p><strong>Пункт выезда:</strong> {{ departure }}</p>
-    <p><strong>Пункт назначения:</strong> {{ destination }}</p>
-    <p><strong>Дата поездки:</strong> {{ date }}</p>
+    <p>ФИО: {{ fio }}</p>
+    <p>Полка: {{ berth }}</p>
+    <p>Возраст: {{ age }} {% if age < 18 %}(Детский билет){% endif %}</p>
+    <p>Пункт выезда: {{ departure }}</p>
+    <p>Пункт назначения: {{ destination }}</p>
+    <p>Дата поездки: {{ date }}</p>
 
     <h3>Выбранные услуги:</h3>
     <ul>
