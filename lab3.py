@@ -168,3 +168,85 @@ def clear_cookies():
     for cookie in cookies_to_clear:
         resp.set_cookie(cookie, '')
     return resp
+
+products = [
+    {"name": "iPhone 13", "price": 80000, "brand": "Apple", "color": "черный"},
+    {"name": "iPhone 12", "price": 60000, "brand": "Apple", "color": "белый"},
+    {"name": "Galaxy S22", "price": 70000, "brand": "Samsung", "color": "черный"},
+    {"name": "Galaxy S21", "price": 55000, "brand": "Samsung", "color": "синий"},
+    {"name": "Xiaomi Mi 11", "price": 40000, "brand": "Xiaomi", "color": "черный"},
+    {"name": "Xiaomi Mi 10", "price": 30000, "brand": "Xiaomi", "color": "белый"},
+    {"name": "Redmi Note 10", "price": 20000, "brand": "Xiaomi", "color": "синий"},
+    {"name": "Pixel 6", "price": 65000, "brand": "Google", "color": "черный"},
+    {"name": "Pixel 5", "price": 50000, "brand": "Google", "color": "зеленый"},
+    {"name": "OnePlus 9", "price": 45000, "brand": "OnePlus", "color": "черный"},
+    {"name": "OnePlus 8", "price": 35000, "brand": "OnePlus", "color": "красный"},
+    {"name": "Sony Xperia 5", "price": 60000, "brand": "Sony", "color": "черный"},
+    {"name": "Sony Xperia 1", "price": 70000, "brand": "Sony", "color": "белый"},
+    {"name": "Huawei P40", "price": 50000, "brand": "Huawei", "color": "черный"},
+    {"name": "Huawei P30", "price": 35000, "brand": "Huawei", "color": "синий"},
+    {"name": "Nokia 8.3", "price": 25000, "brand": "Nokia", "color": "черный"},
+    {"name": "Nokia 5.4", "price": 15000, "brand": "Nokia", "color": "синий"},
+    {"name": "Motorola Edge", "price": 40000, "brand": "Motorola", "color": "черный"},
+    {"name": "Motorola G9", "price": 20000, "brand": "Motorola", "color": "зеленый"},
+    {"name": "Realme 8", "price": 18000, "brand": "Realme", "color": "белый"}
+]
+
+@lab3.route('/lab3/products')
+def products_page():
+    min_price = request.args.get('min_price')
+    max_price = request.args.get('max_price')
+
+    cookie_min = request.cookies.get('min_price')
+    cookie_max = request.cookies.get('max_price')
+
+    if not min_price and cookie_min:
+        min_price = cookie_min
+    if not max_price and cookie_max:
+        max_price = cookie_max
+
+    if min_price:
+        min_price_val = int(min_price)
+    else:
+        min_price_val = None
+
+    if max_price:
+        max_price_val = int(max_price)
+    else:
+        max_price_val = None
+
+
+    #Корректируем если min > max
+    if min_price_val and max_price_val and min_price_val > max_price_val:
+        min_price_val, max_price_val = max_price_val, min_price_val
+
+    filtered = []
+    for p in products:
+        if min_price_val != None and p['price'] < min_price_val:
+            continue
+        if max_price_val != None and p['price'] > max_price_val:
+            continue
+        filtered.append(p)
+
+    resp = make_response(render_template(
+        'products.html',
+        products=filtered,
+        count=len(filtered),
+        min_price=min_price_val,
+        max_price=max_price_val,
+        global_min=min([p['price'] for p in products]),
+        global_max=max([p['price'] for p in products])
+    ))
+
+    if min_price_val != None:
+        resp.set_cookie('min_price', str(min_price_val))
+    if max_price_val != None:
+        resp.set_cookie('max_price', str(max_price_val))
+    return resp
+
+@lab3.route('/lab3/products/reset')
+def reset_products():
+    resp = make_response(redirect('/lab3/products'))
+    resp.set_cookie('min_price', '')
+    resp.set_cookie('max_price', '')
+    return resp
