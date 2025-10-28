@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block lab %}Заказ зерна{% endblock %}
+
+{% block main %}
+    <h1>Форма заказа зерна</h1>
+
+    <form method="post">
+        <select name="grain">
+            <option value="ячмень" {% if grain_type == 'ячмень' %}selected{% endif %}>ячмень</option>
+            <option value="овёс" {% if grain_type == 'овёс' %}selected{% endif %}>овёс</option>
+            <option value="пшеница" {% if grain_type == 'пшеница' %}selected{% endif %}>пшеница</option>
+            <option value="рожь" {% if grain_type == 'рожь' %}selected{% endif %}>рожь</option>
+        </select>
+        <br>
+        <input type="number" step="0.01" name="weight" value="{{ weight }}"> тонн
+        <br>
+        <input type="submit" value="Сформировать заказ">
+    </form>
+
+    {% if message %}
+        <div style="{% if 'Ошибка' in message %}color: red;{% endif %}">
+            {{ message }}
+        </div>
+    {% endif %}
+
+    {% if discount_message %}
+        <div style="margin-top: 5px; color: blue; font-weight: bold;">
+            {{ discount_message }}
+        </div>
+    {% endif %}
+
+    <div><a href="/lab4/grain_order">Вернуться</a></div>
+{% endblock %}
