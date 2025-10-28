@@ -53,4 +53,12 @@
             </div>
         {% endif %}
     </div>
+
+    <div>
+        {% if snowflakes == 3 %}
+            <a href="" onclick="alert('Кнопка замерзла! Повысте температуру, пожалуйста!'); return false;">Вернуться</a>
+        {% else %}
+            <a href="/lab4/fridge">Вернуться</a>
+        {% endif %}
+    </div>
 {% endblock %}
