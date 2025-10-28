@@ -6,6 +6,11 @@
 
 {% if authorized %}
     <h1>Добро пожаловать, {{ login }}!</h1>
+    <div>
+        <form action="/lab4/logout" method="post">
+            <button>Выход</button>
+        </form>
+    </div>
     <div><a href="/lab4/login">Вернуться</a></div>
 {% else %}
     <h1>Вход</h1>
