@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block lab %}Холодильник{% endblock %}
+
+{% block main %}
+<style>
+    .fridge-container {
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .cold-1 { 
+        background: #e0f7ff; 
+        color: #004d66; 
+        border: 2px solid #b3e0ff; 
+        box-shadow: none;
+    }
+
+    .cold-2 { 
+        background: #c0ebff; 
+        color: #003d59; 
+        border: 2px solid #99d6ff; 
+        box-shadow: 0 0 15px 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .cold-3 { 
+        background: #99dfff; 
+        color: #002a3d; 
+        border: 2px solid #80ccff; 
+        box-shadow: 0 0 30px 10px rgba(0, 123, 255, 0.8);
+    }
+</style>
+
+<h1>Настройка холодильника</h1>
+
+<div class="fridge-container cold-{{ snowflakes if snowflakes else None }}">
+    <form method="post">
+        <input type="number" name="temperature"> °C
+        <input type="submit" value="Установить">
+    </form>
+
+
+    {% if message %}
+        <div>
+            {{ message }}
+            <div style="margin-top: 10px;">
+                {% for i in range(snowflakes) %}
+                    ❄️
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
