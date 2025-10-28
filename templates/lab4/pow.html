@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block lab %}Степень числа{% endblock %}
+
+{% block main %}
+    {% if error %}
+        {{ error }}
+    {% else %}
+    <h1>Степень числа</h1>
+    {{ x1 }}<sup>{{ x2 }}</sup> = {{ result }}
+    {% endif %}
+    <div><a href="/lab4/div-form">Вернуться</a></div>
+{% endblock %}

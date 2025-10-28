@@ -22,3 +22,63 @@ def div():
         x2 = int(x2)
         result = x1 / x2
         return render_template('lab4/div.html', x1=x1, x2=x2, result=result)
+    
+@lab4.route('/lab4/sum', methods=['POST'])
+def summn():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    if x1 == '':
+        x1 = 0
+    if x2 == '':
+        x2 = 0
+
+    x1 = int(x1)
+    x2 = int(x2)
+    result = x1 + x2
+    return render_template('lab4/sum.html', x1=x1, x2=x2, result=result)
+
+@lab4.route('/lab4/mul', methods=['POST'])
+def multiply():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    if x1 == '':
+        x1 = 1
+    if x2 == '':
+        x2 = 1
+
+    x1 = int(x1)
+    x2 = int(x2)
+    result = x1 * x2
+    return render_template('lab4/mul.html', x1=x1, x2=x2, result=result)
+
+@lab4.route('/lab4/sub', methods=['POST'])
+def subtract():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    if x1 == '' or x2 == '':
+        return render_template('lab4/sub.html', error='Оба поля должны быть заполнены')
+    else:
+        x1 = int(x1)
+        x2 = int(x2)
+        result = x1 - x2
+        return render_template('lab4/sub.html', x1=x1, x2=x2, result=result)
+
+@lab4.route('/lab4/pow', methods=['POST'])
+def power():
+    x1 = request.form.get('x1')
+    x2 = request.form.get('x2')
+
+    if x1 == '' or x2 == '':
+        return render_template('lab4/pow.html', error='Оба поля должны быть заполнены')
+
+    x1 = int(x1)
+    x2 = int(x2)
+
+    if x1 == 0 and x2 == 0:
+        return render_template('lab4/pow.html', error='0 в степени 0 не имеет смысла!')
+    else:
+        result = x1 ** x2
+        return render_template('lab4/pow.html', x1=x1, x2=x2, result=result)

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block lab %}Сумма чисел{% endblock %}
+
+{% block main %}
+    {% if error %}
+        {{ error }}
+    {% else %}
+    <h1>Сумма чисел</h1>
+    {{ x1 }} + {{ x2 }} = {{ result }}
+    {% endif %}
+    <div><a href="/lab4/div-form">Вернуться</a></div>
+{% endblock %}
