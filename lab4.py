@@ -118,7 +118,7 @@ def login():
             for u in users:
                 if u['login'] == login:
                     user = u
-            name = user['name'] if user else login
+            name = user['name']
         else:
             authorized = False
             login = ''

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 5{% endblock %}
+
+{% block main %}
+    <h1>База знаний</h1>
+
+    <div class="lab5-container">
+        <div class="lab5-buttons">
+            <form action="/lab5/login" method="get">
+                <button type="submit">Вход</button>
+            </form>
+            <form action="/lab5/register" method="get">
+                <button type="submit">Регистрация</button>
+            </form>
+            <form action="/lab5/list" method="get">
+                <button type="submit">Список статей</button>
+            </form>
+            <form action="/lab5/create" method="get">
+                <button type="submit">Создать статью</button>
+            </form>
+        </div>
+            {{ username }}
+        </div>
+    </div>
+
+    <p>Здесь будет выполняться работа с авторизацией и статьями.</p>
+{% endblock %}

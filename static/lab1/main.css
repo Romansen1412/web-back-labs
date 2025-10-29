@@ -42,3 +42,24 @@ body {
     border-radius: 6px;
     margin-top: 4px;
 }
+
+.lab5-container {
+    background-color: #d4edda;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.lab5-buttons form {
+    display: inline;
+}
+
+.lab5-buttons button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
