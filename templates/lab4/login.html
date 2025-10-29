@@ -11,7 +11,11 @@
             <button>Выход</button>
         </form>
     </div>
+
+    <div><a href="/lab4/users">Список пользователй</a></div>
+
     <div><a href="/lab4/login">Вернуться</a></div>
+
 {% else %}
     <h1>Вход</h1>
     <h2>Пожалуйста, авторизуйтесь</h2>
@@ -24,14 +28,25 @@
             <label for="password">Пароль:</label>
             <input type="password" id="password" name="password">
         </div>
-        <div style="display: inline-block; color: red; font-weight: bold; border: 2px solid red; padding: 4px 8px; margin: 5px;">
-            {{ error }}
-        </div>
+
+        {% if error %}
+            <div style="display: inline-block; color: red; font-weight: bold; border: 2px solid red; padding: 4px 8px; margin: 5px;">
+                {{ error }}
+            </div>
+        {% endif %}
+
         <div>
             <button type="submit">Войти</button>
             <button type="reset">Отмена</button>
         </div>
     </form>
+
+    <div style="margin-top: 10px;">
+        <form action="/lab4/register" method="get">
+            <button type="submit">Регистрация</button>
+        </form>
+    </div>
+
     <div><a href="/lab4/login">Вернуться</a></div>
 {% endif %}
 {% endblock %}

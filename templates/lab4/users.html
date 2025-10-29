@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block lab %}Пользователи{% endblock %}
+
+{% block main %}
+<h1>Список пользователей</h1>
+
+<p>Вы вошли как <b>{{ current_user['name'] }}</b> ({{ current_user['login'] }})</p>
+
+<ul style="list-style-type: none; padding-left: 0;">
+    {% for u in users %}
+        <li style="border: 1px solid black; padding: 8px; margin-bottom: 6px; border-radius: 6px;">
+            <b>Имя:</b> {{ u['name'] }} <br>
+            <b>Логин:</b> {{ u['login'] }}
+
+            {% if u['login'] == current_user['login'] %}
+                <div style="margin-top: 6px;">
+                    <form action="/lab4/delete" method="post" style="display:inline;">
+                        <button type="submit">Удалить себя</button>
+                    </form>
+                    <a href="/lab4/edit">
+                        <button type="button">Редактировать</button>
+                    </a>
+                </div>
+            {% endif %}
+            
+        </li>
+    {% endfor %}
+</ul>
+
+<div><a href="/lab4/login">На главную</a></div>
+{% endblock %}
