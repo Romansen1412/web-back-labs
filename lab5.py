@@ -37,7 +37,6 @@ def main():
     login = session.get('login', 'Anonymous')
     return render_template('lab5/lab5.html', login=login)
 
-
 @lab5.route('/lab5/register', methods=['GET', 'POST'])
 def register():
     session.pop('login', None)
@@ -72,7 +71,6 @@ def register():
     db_close(conn, cur)
     return render_template("lab5/success.html", login=login)
 
-
 @lab5.route('/lab5/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -100,7 +98,6 @@ def login():
     session['login'] = login
     db_close(conn, cur)
     return render_template("lab5/success_login.html", login=login)
-
 
 @lab5.route('/lab5/create', methods=['GET', 'POST'])
 def create():
@@ -141,8 +138,6 @@ def create():
     db_close(conn, cur)
     return redirect('/lab5/list')
 
-
-
 @lab5.route('/lab5/list')
 def list():
     login = session.get('login')  # None если не залогинен
@@ -176,7 +171,6 @@ def list():
     db_close(conn, cur)
     return render_template('lab5/articles.html', articles=articles, login=login, user_id=user_id)
 
-
 @lab5.route('/lab5/logout')
 def logout():
     session.pop('login', None)
@@ -190,14 +184,12 @@ def edit_article(article_id):
 
     conn, cur = db_connect()
 
-    # Получаем id текущего пользователя
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
     else:
         cur.execute("SELECT id FROM users WHERE login=?;", (login,))
     user_id = cur.fetchone()["id"]
 
-    # Проверяем, принадлежит ли статья пользователю
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("SELECT * FROM articles WHERE id=%s AND user_id=%s;", (article_id, user_id))
     else:
@@ -228,7 +220,6 @@ def edit_article(article_id):
     db_close(conn, cur)
     return redirect('/lab5/list')
 
-
 @lab5.route('/lab5/delete/<int:article_id>', methods=['POST'])
 def delete_article(article_id):
     login = session.get('login')
@@ -237,7 +228,6 @@ def delete_article(article_id):
 
     conn, cur = db_connect()
 
-    # Получаем id текущего пользователя
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
     else:
@@ -280,7 +270,7 @@ def edit_profile():
         return redirect('/lab5/login')
 
     conn, cur = db_connect()
-    # Получаем текущее имя пользователя
+    
     if current_app.config['DB_TYPE'] == 'postgres':
         cur.execute("SELECT full_name FROM users WHERE login=%s;", (login,))
     else:
