@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 5{% endblock %}
+
+{% block main %}
+    <h1>Изменение имени и пароля</h1>
+
+    {% if error %}
+        <div class="error" style="display: inline-block;">{{ error }}</div>
+    {% endif %}
+
+    <form method="post">
+        <label>
+            Новое имя:
+            <input type="text" name="full_name" value="{{ full_name }}" required>
+        </label>
+        <label>
+            Новый пароль:
+            <input type="password" name="password" required>
+        </label>
+        <label>
+            Подтверждение пароля:
+            <input type="password" name="confirm_password" required>
+        </label>
+        <button type="submit">Сохранить</button>
+    </form>
+
+{% endblock %}
