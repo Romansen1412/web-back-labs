@@ -53,13 +53,21 @@ body {
     margin-bottom: 20px;
 }
 
-.lab5-buttons form {
-    display: inline;
+.lab5-buttons form,
+.lab5-user form {
+    display: inline-block;
 }
 
-.lab5-buttons button {
+.lab5-buttons button,
+.lab5-user button {
     font-size: 18px;
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
+}
+
+.lab5-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

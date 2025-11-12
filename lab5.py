@@ -40,6 +40,7 @@ def main():
 
 @lab5.route('/lab5/register', methods=['GET', 'POST'])
 def register():
+    session.pop('login', None)
     if request.method == 'GET':
         return render_template('lab5/register.html')
     
@@ -160,3 +161,90 @@ def list():
     
     db_close(conn, cur)
     return render_template('lab5/articles.html', articles=articles)
+
+@lab5.route('/lab5/logout')
+def logout():
+    session.pop('login', None)
+    return redirect('/lab5')
+
+@lab5.route('/lab5/edit/<int:article_id>', methods=['GET', 'POST'])
+def edit_article(article_id):
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+
+    # Получаем id текущего пользователя
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT id FROM users WHERE login=?;", (login,))
+    user_id = cur.fetchone()["id"]
+
+    # Проверяем, принадлежит ли статья пользователю
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM articles WHERE id=%s AND user_id=%s;", (article_id, user_id))
+    else:
+        cur.execute("SELECT * FROM articles WHERE id=? AND user_id=?;", (article_id, user_id))
+    article = cur.fetchone()
+
+    if not article:
+        db_close(conn, cur)
+        return "У вас нет прав на редактирование этой статьи", 403
+
+    if request.method == 'GET':
+        db_close(conn, cur)
+        return render_template('lab5/edit_article.html', article=article)
+
+    # Обновление статьи
+    title = request.form.get('title')
+    article_text = request.form.get('article_text')
+
+    if not title or not article_text.strip():
+        db_close(conn, cur)
+        return render_template('lab5/edit_article.html', article=article, error="Поля не могут быть пустыми")
+
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("UPDATE articles SET title=%s, article_text=%s WHERE id=%s;", (title, article_text, article_id))
+    else:
+        cur.execute("UPDATE articles SET title=?, article_text=? WHERE id=?;", (title, article_text, article_id))
+
+    db_close(conn, cur)
+    return redirect('/lab5/list')
+
+
+@lab5.route('/lab5/delete/<int:article_id>', methods=['POST'])
+def delete_article(article_id):
+    login = session.get('login')
+    if not login:
+        return redirect('/lab5/login')
+
+    conn, cur = db_connect()
+
+    # Получаем id текущего пользователя
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT id FROM users WHERE login=%s;", (login,))
+    else:
+        cur.execute("SELECT id FROM users WHERE login=?;", (login,))
+    user_id = cur.fetchone()["id"]
+
+    # Проверяем, принадлежит ли статья пользователю
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("SELECT * FROM articles WHERE id=%s AND user_id=%s;", (article_id, user_id))
+    else:
+        cur.execute("SELECT * FROM articles WHERE id=? AND user_id=?;", (article_id, user_id))
+    article = cur.fetchone()
+
+    if not article:
+        db_close(conn, cur)
+        return "У вас нет прав на удаление этой статьи", 403
+
+    # Удаляем только если владелец совпадает
+    if current_app.config['DB_TYPE'] == 'postgres':
+        cur.execute("DELETE FROM articles WHERE id=%s;", (article_id,))
+    else:
+        cur.execute("DELETE FROM articles WHERE id=?;", (article_id,))
+
+    db_close(conn, cur)
+    return redirect('/lab5/list')
