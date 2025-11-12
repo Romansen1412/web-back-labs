@@ -12,7 +12,7 @@
     {% for article in articles %}
         <div style="border-bottom: 1px solid black; margin-bottom: 15px; padding-bottom: 10px;">
             <h2>{{ article['title'] }}</h2>
-            <blockquote>{{ article['article_text'] }}</blockquote>
+            <blockquote style="white-space: pre-line;">{{ article['article_text'] }}</blockquote>
 
             {% if article.get('is_favorite', False) %}
                 <p style="color: red; font-weight: bold;">Любимая статья</p>
