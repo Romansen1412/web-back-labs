@@ -4,7 +4,7 @@ lab6 = Blueprint('lab6', __name__)
 
 offices = []
 for i in range(1, 11):
-    offices.append({"number": i, "tenant": ""}) # tenant пустой - офис свободен
+    offices.append({"number": i, "tenant": "", "price": 900 + i*3}) # tenant пустой - офис свободен
 
 @lab6.route('/lab6/')
 def main():

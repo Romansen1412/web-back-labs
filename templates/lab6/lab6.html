@@ -21,34 +21,48 @@ function getOfficeList() {
     .then(function(response) {
         return response.json();
     })
+    
     .then(function(data) {
         // получаем массив офисов из ответа
         const office_list = data.result;
         const ul = document.getElementById('office-list');
+        let totalCost = 0;
 
         for (let i = 0; i < office_list.length; i++) {
             const office = office_list[i];
             const li = document.createElement('li');
-            li.innerText = `${office.number}: ${office.tenant || 'свободен'}`;
+            li.innerText = `${office.number}: ${office.tenant || 'свободен'}, цена: ${office.price}`;
             
             const bookingButton = document.createElement('button');
             bookingButton.innerText = 'зарезервировать';
             bookingButton.onclick = function() { booking(office.number); };
-            li.appendChild(bookingButton);
 
             const cancelButton = document.createElement('button');
             cancelButton.innerText = 'освободить';
             cancelButton.onclick = function() { cancelBooking(office.number); };
-            li.appendChild(cancelButton);
+            
+            const buttonGroup = document.createElement('span');
+            buttonGroup.className = 'button-group';
+            buttonGroup.appendChild(bookingButton);
+            buttonGroup.appendChild(cancelButton);
+            li.appendChild(buttonGroup);
 
             ul.appendChild(li);
+
+            if (office.tenant !== '')
+            {
+                totalCost += office.price;
+            }
         }
+
+        const totalDiv = document.getElementById('total-cost');
+        totalDiv.innerText = `Общая стоимость арендованных офисов: ${totalCost}`;
     });
 
     // функция бронирования офиса
     function booking(officeNumber) {
         const url = '/lab6/json-rpc-api/';
-        
+
         const json = {
             'jsonrpc': '2.0',
             'method': 'booking',
@@ -137,6 +151,78 @@ document.addEventListener('DOMContentLoaded', function() {
 {% endblock %}
 
 {% block main %}
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #office-list {
+        list-style: none;
+        padding: 0;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    #office-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+
+    .button-group {
+        display: flex;
+    }
+
+    .button-group button {
+        margin-left: 5px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .button-group button:first-child {
+        background-color: #3498db;
+        color: white;
+    }
+
+    .button-group button:first-child:hover {
+        background-color: #2980b9;
+    }
+
+    .button-group button:last-child {
+        background-color: #e74c3c;
+        color: white;
+    }
+
+    .button-group button:last-child:hover {
+        background-color: #c0392b;
+    }
+
+    #total-cost {
+        text-align: center;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+    </style>
+
     <h1>Список кабинетов</h1>
-    <ul id="office-list"></ul>
+    <ul id="office-list" style="max-width: 500px; margin: 0 auto; padding:0;"></ul>
+    <div id="total-cost" style="margin-top:15px; text-align:center; font-weight:bold;"></div>
 {% endblock %}
