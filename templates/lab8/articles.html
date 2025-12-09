@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block lab %}Лабораторная работа 8{% endblock %}
+
+{% block main %}
+
+<h1>Статьи</h1>
+
+{% if articles|length == 0 %}
+    <div>Статей пока нет.</div>
+{% else %}
+    {% for article in articles %}
+        <div style="border-bottom: 1px solid black; margin-bottom: 15px; padding-bottom: 10px;">
+            <h2>{{ article.title }}</h2>
+            <blockquote style="white-space: pre-line;">{{ article.article_text }}</blockquote>
+
+            {% if current_user.is_authenticated and article.login_id == current_user.id %}
+                <a href="{{ url_for('lab8.edit_article', article_id=article.id) }}">Редактировать</a>
+                <form action="{{ url_for('lab8.delete_article', article_id=article.id) }}" method="post" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Удалить статью?')">Удалить</button>
+                </form>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
