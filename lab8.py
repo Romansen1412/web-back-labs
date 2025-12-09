@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from db import db
 from db.models import users, articles
 from flask_login import login_user, logout_user, login_required, current_user
+from sqlalchemy import or_
 
 lab8 = Blueprint("lab8", __name__)
 
@@ -59,15 +60,29 @@ def register():
 
 @lab8.route('/lab8/articles')
 def list_articles():
+    q = request.args.get('q', '').strip()
+
+    # базовый запрос: публичные + свои (если авторизован)
     if current_user.is_authenticated:
-        # публичные статьи + свои
-        articles_list = articles.query.filter(
+        base_query = articles.query.filter(
             (articles.is_public == True) | (articles.login_id == current_user.id)
-        ).all()
+        )
     else:
-        # только публичные
-        articles_list = articles.query.filter_by(is_public=True).all()
-    return render_template('lab8/articles.html', articles=articles_list)
+        base_query = articles.query.filter(articles.is_public == True)
+
+    # если есть строка поиска — добавляем фильтр
+    if q:
+        search = f"%{q}%"
+        base_query = base_query.filter(
+            or_(
+                articles.title.ilike(search),
+                articles.article_text.ilike(search)
+            )
+        )
+
+    result = base_query.all()
+
+    return render_template('lab8/articles.html', articles=result)
 
 @lab8.route('/lab8/create', methods=['GET', 'POST'])
 @login_required

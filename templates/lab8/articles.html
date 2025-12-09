@@ -4,6 +4,11 @@
 
 {% block main %}
 
+<form method="get" action="{{ url_for('lab8.list_articles') }}">
+    <input type="text" name="q" placeholder="Поиск..." value="{{ request.args.get('q', '') }}">
+    <button type="submit">Искать</button>
+</form>
+
 <h1>Статьи</h1>
 
 {% if articles|length == 0 %}
