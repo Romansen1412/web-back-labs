@@ -1,6 +1,34 @@
 from flask import Blueprint, render_template, request, redirect, session, abort
+from datetime import datetime
 
 lab7 = Blueprint('lab7', __name__)
+
+def validate_film(film):
+    errors = {}
+
+    if not film.get('title_ru', '').strip():
+        errors['title_ru'] = 'Введите название на русском'
+
+    if not film.get('title', '').strip() and film.get('title_ru', '').strip() == '':
+        errors['title'] = 'Введите оригинальное название'
+
+    year = film.get('year')
+    current_year = datetime.now().year
+    try:
+        year = int(year)
+        if year < 1895 or year > current_year:
+            errors['year'] = f'Год должен быть между 1895 и {current_year}'
+    except:
+        errors['year'] = 'Год должен быть числом'
+
+    desc = film.get('description', '').strip()
+    if not desc:
+        errors['description'] = 'Заполните описание'
+    elif len(desc) > 2000:
+        errors['description'] = 'Описание не должно превышать 2000 символов'
+
+    return errors if errors else None
+
 
 @lab7.route('/lab7/')
 def lab():
@@ -67,10 +95,13 @@ def del_film(id):
 def put_film(id):
     if 0 <= id < len(films):
         film = request.get_json()
-        if film['description'] == '':
-            return {'description': 'Заполните описание'}, 400
-        if film['title'] == '' and film['title_ru'] != '':
+        if not film.get('title') and film.get('title_ru'):
             film['title'] = film['title_ru']
+
+        errors = validate_film(film)
+        if errors:
+            return errors, 400
+
         films[id] = film
         return films[id]
     else:
@@ -79,10 +110,13 @@ def put_film(id):
 @lab7.route('/lab7/rest-api/films/', methods=['POST'])
 def add_film():
     film = request.get_json()
-    if film['description'] == '':
-        return {'description': 'Заполните описание'}, 400
-    if film['title'] == '' and film['title_ru'] != '':
+    if not film.get('title') and film.get('title_ru'):
         film['title'] = film['title_ru']
+
+    errors = validate_film(film)
+    if errors:
+        return errors, 400
+
     films.append(film)
     new_id = len(films) - 1
     return films[new_id]

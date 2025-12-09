@@ -101,7 +101,10 @@ function sendFilm() {
         return resp.json();
     })
     .then(function(errors) {
-        document.getElementById('description-error').innerText = errors.description;
+        document.getElementById('title-error').innerText = errors?.title || '';
+        document.getElementById('title-ru-error').innerText = errors?.title_ru || '';
+        document.getElementById('year-error').innerText = errors?.year || '';
+        document.getElementById('description-error').innerText = errors?.description || '';
     });
 }
 
