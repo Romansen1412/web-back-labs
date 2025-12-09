@@ -20,6 +20,7 @@ app.register_blueprint(lab3)
 app.register_blueprint(lab4)
 app.register_blueprint(lab5)
 app.register_blueprint(lab6)
+app.register_blueprint(lab7)
 
 @app.route("/")
 @app.route("/index")
@@ -39,6 +40,7 @@ def start():
                 <li><a href="/lab4/">Четвертая лабораторная</a></li>
                 <li><a href="/lab5/">Пятая лабораторная</a></li>
                 <li><a href="/lab6/">Шестая лабораторная</a></li>
+                <li><a href="/lab7/">Седьмая лабораторная</a></li>
             </ul>
             <hr>
             <footer>
