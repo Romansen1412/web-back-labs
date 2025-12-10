@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block lab %}Синхронизация отпусков{% endblock %}
+
+{% block main %}
+<h1>Синхронизация отпусков — {{ year }} год</h1>
+
+<div>
+    {% if user %}
+        <p>Вы вошли как: <strong>{{ user.name }}</strong> (<em>{{ user.login }}</em>)</p>
+        <form action="{{ url_for('rgz.logout') }}" method="get" style="display:inline-block;">
+            <button type="submit">Выйти</button>
+        </form>
+        <form action="{{ url_for('rgz.delete_account') }}" method="post" style="display:inline-block;">
+            <button type="submit" onclick="return confirm('Вы точно хотите удалить свой аккаунт?')">Удалить аккаунт</button>
+        </form>
+    {% else %}
+        <a href="{{ url_for('rgz.login') }}">Войти</a> | <a href="{{ url_for('rgz.register') }}">Регистрация</a>
+    {% endif %}
+</div>
+
+<div>
+    <form method="get">
+        <label>Год: <input type="number" name="year" value="{{ year }}"></label>
+        <button type="submit">Показать</button>
+    </form>
+</div>
+
+{% if missing %}
+    <p style="color:red;">Необходимо выбрать ещё {{ missing }} неделю(и) отпуска.</p>
+{% endif %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="text-align:center; margin: 10px 0;">
+        <ul class="flashes" style="list-style:none; padding:0; display:inline-block; width:100%; text-align:center;">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th rowspan="2">Неделя</th>
+            <th colspan="2">Даты</th>
+            <th rowspan="2">Статус</th>
+            {% if editable and user %}<th rowspan="2">Действие</th>{% endif %}
+        </tr>
+        <tr>
+            <th>Пн</th>
+            <th>Вс</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for w, monday, sunday in weeks %}
+        <tr>
+            <td>{{ w }}</td>
+            <td>{{ monday }}</td>
+            <td>{{ sunday }}</td>
+            <td>
+                {% if w in taken %}
+                    {% set uid = taken[w].user_id %}
+                    {% if user and uid == user.id %}
+                        Вы пометили
+                    {% else %}
+                        Занято ({{ users_map[uid] }})
+                    {% endif %}
+                {% else %}
+                    Свободно
+                {% endif %}
+            </td>
+            {% if editable and user %}
+                <td>
+                    <form method="post" action="{{ url_for('rgz.toggle_week', year=year, week_number=w) }}">
+                        <button type="submit">
+                            {% if w in marked_weeks %}
+                                Снять
+                            {% else %}
+                                Пометить
+                            {% endif %}
+                        </button>
+                    </form>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<p>Всего сотрудников на сайте: {{ employees_count }}</p>
+{% endblock %}
